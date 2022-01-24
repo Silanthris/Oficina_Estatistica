@@ -22,7 +22,7 @@ fr_fatura<-prop.table(f_fatura)
 
 freq_rel=h$counts/20
 
-text(locator(n=5),paste(round(freq_rel,2)))
+#text(locator(n=5),paste(round(freq_rel,2)))
 
 
 
@@ -59,15 +59,82 @@ cor(faturacao, despesa)  # correlaçao forte ???
 
 #Modelo regresao linear
 
-#b0 e o interept b1 e a correlacao
+#b0 e o intercept b1 e o coeficiente de regressao
 
-model = lm(despesa ~ faturacao)
+#e a correlacao
 
-abline(model, col="red")
+
+model = lm(faturacao ~ despesa)
+
+#plot (faturacao, despesa)
+
+
+model
+
+summary(model)
+
+#Residuals, sao os erros de aproximacao da reta.
+
+abline(model, col="green")
 
 # intercept quando a variavel independente  e 0 a outra e o valor de intercept, neste caso quando a despesa e 0, a faturacao e 108
 
 # correlacao, a cada unidade que se adiciona a variavel indepente aumenta o (valor da variavel) á variavel restante.
 
 # r elevado a 2 ( determinacao ),  r2 ..... da variancia de y e explicada pela variancia de x
+cor(faturacao, despesa)
+
+# e a correlaçao
+
 cor(faturacao, despesa)^2
+#e a determinaçao = r^2
+
+#r^2 e explicado pela variança de x
+
+#teste a media
+
+#pvalue valor do erro
+
+#se p value menor que ns (valor da significancia) rejeita se a hipotese nula
+
+# se p > ns nao se rejeita
+
+
+t.test(faturacao,
+       alternative="two.sided",
+       mu=1500,
+       conf.level = 0.95)
+
+
+dbinom(9,20,0.21)
+
+#distribuiçao nominal
+
+# uma variavel numerica com uma variavel nominal(grupos)
+
+# se as medias foram iguais a diferença e 0, sendo usada a h0. Se as media foram diferentes as medias sao diferentes entao utilizamos a h1.
+
+
+# se o intervalo de confiança for positivo e pq o primeiro grupo tem uma media maior que o segundo, se o valor de confianca for negativo vise verka.
+
+
+t.test(faturacao~filial,
+       alternative="two.sided",
+       conf.level = 0.95)
+
+
+#teste de normalidade
+
+shapiro.test(despesa)
+
+shapiro.test(model$residuals)
+
+t.test(model$residuals,mu=0 ,alternative="two.sided", conf.level = 0.95)
+
+# teste a media dos eeros, e suposto dar 1 o p-value
+
+
+
+
+
+
