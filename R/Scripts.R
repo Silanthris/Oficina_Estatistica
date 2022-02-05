@@ -1,3 +1,13 @@
+#************************************************************
+#*Scripts do Trabalho
+#*#************************************************************
+
+
+
+#************************************************************
+#*Variaveis
+#*#************************************************************
+
 
 filial = c(1,1,1,1,1,1,0,0,0,0,0,0,1,1,0,0,0,0,1,0)
 faturacao = c(650.7,620,701.3,789.3,726,320,1676,1817.3,2234,2292.3,1572.7,1012.8,735.3,844.1,948.7,1178.2,1440.7,1482.6,614.3,1180.1)
@@ -6,119 +16,77 @@ funcionarios = c(53,49,52,61,43,28,105,137,156,139,98,87,52,66,67,97,116,101,47,
 avaliacao = c(2,1,1,2,3,1,3,4,4,3,3,4,3,2,1,2,3,4,1,2)
 
 
-# Filial Distruibiçao discreta e binominal , grafico circular e o grafico de barras
-
-#faturacao e despesa variaveis continuas histograma e diagrama de extremos e quartis
-
-
-
-f_f<- table(filial)
-
-fr_f<-prop.table(f_f)
-
-f_fatura<- table(faturacao)
-f_despesa<- table(despesa)
-f_funcionarios<- table(funcionarios)
-f_avaliacao<- table(avaliacao)
-
-fr_fatura<-prop.table(f_fatura)
-
-freq_rel=h$counts/20
-
-
 #Summary das variaveis
 summary(despesa)
 summary(faturacao)
 summary(funcionarios)
 
-#text(locator(n=5),paste(round(freq_rel,2)))
+#Utilizar as variaveis
 
+f_f<- table(filial)
+fr_f<-prop.table(f_f)
+f_fatura<- table(faturacao)
+f_despesa<- table(despesa)
+f_funcionarios<- table(funcionarios)
+f_avaliacao<- table(avaliacao)
+fr_fatura<-prop.table(f_fatura)
 
+#************************************************************
+#*Graficos
+#*#************************************************************
+
+#Extras dos graficos
 
 nomes_c<-c("Sul","Norte")
 cores<-c("Black","Blue")
 rotulo<-paste(nomes_c,"(",paste(f_f),")",sep=" ")
-
-
 nomes_a<-c("Grande","Boa","Decente","Fraca")
 cores_a<-c("Green","Blue","Orange","Red")
-
-
 rotulo_ava<-paste(nomes_a,"(",paste(f_avaliacao),")",sep=" ")
-
-
 rotulo_ava<-paste(nomes_a,"(",paste(f_avaliacao),")",sep=" ")
-
-
 rotulo<-paste(nomes_c,"(",paste(round(freq_rel,3) ),")",sep=" ")
-
-
-
-
-
 
 # pie charts
 pie(f_f, main="Filiais",labels=rotulo,col=cores)
-pie(f_avaliacao, main="Avalia�oes",labels=rotulo_ava,col=cores_a)
+pie(f_avaliacao, main="Avaliaçoes",labels=rotulo_ava,col=cores_a)
 
 
 
 
-
-
+# Grafico de Barras
+barplot(f_despesa,main="Numero por Faturacao",xlab="faturacao",ylab="n",col="skyblue", ylim=c(0,10))
 barplot(f_funcionarios,main="Numero por filial",xlab="Filiais",ylab="Numero",col="skyblue", ylim=c(0,20))
 
 
 
-fa<-table(faturacao) #var continua
-
-# Nï¿½o utilizar barras para var continuas
-barplot(f_despesa,main="Numero por Faturacao",xlab="faturacao",ylab="n",col="skyblue", ylim=c(0,10))
-
-#Histograma
-h<-hist(faturacao,main="Faturacao",xlab="Faturas em m€",ylab="Numero de faturas", col="skyblue",xlim=c(0,2500),ylim=c(0,10))
+# Histogramas
+h<-hist(faturacao,main="Faturacao",xlab="Faturas em mâ¬",ylab="Numero de faturas", col="skyblue",xlim=c(0,2500),ylim=c(0,10))
 h
-
-histograma<-hist(despesa,main="Despesa",xlab="Despesas em ???",ylab="Numero de Despesas", col="skyblue",xlim=c(0,160),ylim=c(0,8))
-
+histograma<-hist(despesa,main="Despesa",xlab="Despesas em €",ylab="Numero de Despesas", col="skyblue",xlim=c(0,160),ylim=c(0,8))
 histograma
+h_func<-hist(funcionarios,main="Funcionarios",xlab="nº de funcionarios",ylab="Numero de funcionarios", col="skyblue",xlim=c(0,200),ylim=c(0,10))
 
-h_func<-hist(funcionarios,main="Funcionarios",xlab="n� de funcionarios",ylab="Numero de funcionarios", col="skyblue",xlim=c(0,200),ylim=c(0,10))
+
 
 #Diagrama de extremos e quartis
 boxplot(faturacao)
 
 boxplot(faturacao ~ filial, main = "Comparacao fatura fililal", ylab="fatura em euros", xlab="", names=c("Sul","Norte"),col=c("pink","blue"))
 
-boxplot(faturacao ~ avaliacao, main = "Comparacao fatura�ao avalia�ao", ylab="fatura em euros", xlab="", names=c("Grande","Boa","Decente","Fraca"),col=c("Green","Blue","Orange","Red"))
+boxplot(faturacao ~ avaliacao, main = "Comparacao faturaçao avaliaçao", ylab="fatura em euros", xlab="", names=c("Grande","Boa","Decente","Fraca"),col=c("Green","Blue","Orange","Red"))
 
 boxplot(funcionarios ~ filial, main = "Comparacao funcionarios filial", ylab="numero de funcionarios", xlab="", names=c("Sul","Norte"),col=c("pink","blue"))
 
 boxplot(funcionarios, main = "Comparacao funcionarios filial", ylab="numero de funcionarios", xlab="")
 
 
+tapply(faturacao,filial,summary)# Para interpretar os valores do boxplot
 
 
-IQR(faturacao)
-
-
-# nuvem de pontos, comparacao entre duas variaveis continuas
-plot (despesa, faturacao)
 
 #correlacao
-cor(faturacao, despesa)  # correlaçao forte ???
+cor(faturacao, despesa)
 
-
-#Modelo regresao linear
-
-#b0 e o intercept b1 e o coeficiente de regressao
-
-#e a correlacao
-
-
-
-
-#plot (faturacao, despesa)
 
 #**********************************************
 #Modelos de Regressao
@@ -150,34 +118,7 @@ abline(model2, col="red")
 plot (funcionarios, faturacao)
 
 
-
-#Residuals, sao os erros de aproximacao da reta.
-
-
-
-# intercept quando a variavel independente  e 0 a outra e o valor de intercept, neste caso quando a despesa e 0, a faturacao e 108
-
-# correlacao, a cada unidade que se adiciona a variavel indepente aumenta o (valor da variavel) á variavel restante.
-
-# r elevado a 2 ( determinacao ),  r2 ..... da variancia de y e explicada pela variancia de x
-
-
-# e a correlaçao
-
-
-#e a determinaçao = r^2
-
-#r^2 e explicado pela variancia de x
-
-#teste a media
-
-#pvalue valor do erro
-
-#se p value menor que ns (valor da significancia) rejeita se a hipotese nula
-
-# se p > ns nao se rejeita
-
-
+# TESTES DE Media
 
 t.test(faturacao,
        alternative="two.sided",
@@ -195,11 +136,7 @@ t.test(funcionarios,
        conf.level = 0.95)
 
 
-
-
-
 # TESTES DE GRUPO FILIAL
-
 
 
 t.test(faturacao~filial,
@@ -214,32 +151,17 @@ t.test(funcionarios~filial,
        alternative="two.sided",
        conf.level = 0.95)
 
-# TESTES DE GRUPO Poupan�a
+
+
+# TESTES DE GRUPO Poupança
 
 anova(lm(faturacao~avaliacao)) 
 
 
 predict(model, antiguidade = 7) # 144.09303
 
-
-#Testes com mais de 3 grupos
-
-
-
-
-#Distribui�ao e Probabilidade de uma amostra ser realistica comparada com a popula�ao. "9" e o numero de pessoas de um grupo "numero total de amostrar" "percentagem de um grupo na popula�ao"
+#Distribuiçao e Probabilidade de uma amostra ser realistica comparada com a populaçao.
 dbinom(9,20,0.21)
-
-#distribuiçao nominal
-
-# uma variavel numerica com uma variavel nominal(grupos)
-
-# se as medias foram iguais a diferença e 0, sendo usada a h0. Se as media foram diferentes as medias sao diferentes entao utilizamos a h1.
-
-
-# se o intervalo de confiança for positivo e pq o primeiro grupo tem uma media maior que o segundo, se o valor de confianca for negativo vise verka.
-
-
 
 #teste de normalidade
 
@@ -253,15 +175,12 @@ shapiro.test(model$residuals)
 
 t.test(model$residuals,mu=0 ,alternative="two.sided", conf.level = 0.95)
 
-# teste a media dos erros, e suposto dar 1 o p-value
 
+# Contas utilizados na previsao de um valor pelo modelo de regressao linear
 
+lucro = 11.041 + (-0.234 * 17) = 7.063 
 
-# Contas ooooohhh voltei ao 10�ano, que caricata 
-
-lucro = 11.041 + (-0.234 * 17) = 7.063 # aproximadamente 7.063m/$
-
-fatura�ao =  108.6 + (14.153 * 87.8)
+faturaçao =  108.6 + (14.153 * 87.8)
 
 3000 = 108.6 + (14.153 * x)
 3000 = 108.6 + 14.153x
@@ -276,11 +195,12 @@ x= 204.295908995
 y = 841.4/14.153
 y = 59.4502932241
 
-  summary(model)
-  
-  
-  fatura�ao =  108.6 + (14.153 * 120)
- 
+faturaçao =  108.6 + (14.153 * 120)
+
+
+# Grafico naos usados
+plot(model$residuals,xlab="Faturaçao",ylab="Resíduos")
+abline(model, col="green")
 
 
 
@@ -288,13 +208,12 @@ y = 59.4502932241
 
 
 
-# grafico naos usados wooooowowowoow mete medoo wowowo nao olhes
- plot(model$residuals,xlab="Fatura�ao",ylab="Res�duos")
- 
- abline(model, col="green")
 
 
 
- 
- 
+
+
+
+
+
 
